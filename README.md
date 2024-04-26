@@ -1,6 +1,8 @@
 # Lambda Poke API
 
-Lambda Poke API is a RESTful API that provides information about Pokémon. It utilizes AWS Lambda and DynamoDB to manage backend operations.
+Lambda Poke API es una API RESTful que proporciona información sobre Pokémon. Utiliza AWS Lambda, DynamoDB y API Gateway  para administrar las operaciones de backend.
+![](https://samcp-aws-demo-s3.s3.us-east-2.amazonaws.com/Lambda+PokeApi.png)
+
 
 ## Configuración del Proyecto
 1. **Environment**
