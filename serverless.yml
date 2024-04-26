@@ -1,0 +1,72 @@
+service: lambdaPokeApiV2
+
+useDotenv: true
+
+frameworkVersion: "3"
+
+provider:
+  environment:
+    URL_POKE_API: ${env:URL_POKE_API}
+    POKEMON_TABLE: ${env:POKEMON_TABLE}
+    POKEMON_IMAGE_BASE_URL: ${env:POKEMON_IMAGE_BASE_URL}
+  name: aws
+  runtime: nodejs16.x
+  region: us-east-1
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - dynamodb:*
+      Resource:
+        - arn:aws:dynamodb:us-east-1:839838261856:table/PokemonTableV2
+
+plugins:
+  - serverless-offline
+  - serverless-esbuild
+
+functions:
+  getPokemon:
+    handler: src/controllers/PokeController.getPokeCtrl
+    events:
+      - http:
+          method: GET
+          path: /pokemon/{pokemonId}
+  getPokemons:
+    handler: src/controllers/PokeController.getPokesCtrl
+    events:
+      - http:
+          method: GET
+          path: /pokemons
+  postPokemon:
+    handler: src/controllers/PokeController.postPokeCtrl
+    events:
+      - http:
+          method: POST
+          path: /pokemon
+
+custom:
+  documentation:
+    outputFile: ./openapi.yml
+    version: "1.0"
+    title: My API
+    description: Description of my API
+    models:
+      - ./models/**/*.js
+    apis:
+      - functions:
+          - getPokemon
+          - getPokemons
+          - postPokemon
+
+resources:
+  Resources:
+    PokemonTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: PokemonTableV2
+        BillingMode: PAY_PER_REQUEST
+        AttributeDefinitions:
+          - AttributeName: id
+            AttributeType: S
+        KeySchema:
+          - AttributeName: id
+            KeyType: HASH
