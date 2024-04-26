@@ -1,0 +1,46 @@
+openapi: 3.0.0
+info:
+  title: Pokemon API
+  version: 1.0.0
+paths:
+  /pokemon/{pokemonId}:
+    get:
+      summary: Get a Pokemon by ID
+      parameters:
+        - name: pokemonId
+          in: path
+          required: true
+          description: ID of the Pokemon to retrieve
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Successful response
+        "404":
+          description: Pokemon not found
+  /pokemons:
+    get:
+      summary: Get all Pokemons
+      responses:
+        "200":
+          description: Successful response
+    post:
+      summary: Create a new Pokemon
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                base_experience:
+                  type: number
+                height:
+                  type: number
+                weight:
+                  type: number
+      responses:
+        "201":
+          description: Pokemon created successfully
