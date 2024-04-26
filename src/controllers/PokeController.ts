@@ -7,28 +7,28 @@ import {
 const PokeService = require("../services/PokeService");
 import { PokemonValidator } from "../validators/AppSchemaValidator";
 
-// export const getPokesCtrl: APIGatewayProxyHandler = async () => {
-//   try {
-//     const result = await PokeService.getPokemons();
-//     if (!result) {
-//       throw new Error("No result available for the requested Pokemon");
-//     }
-//     return {
-//       statusCode: 200,
-//       body: JSON.stringify({
-//         status: true,
-//         message: MSG_ERROR_11002,
-//         data: result,
-//       }),
-//     };
-//   } catch (error) {
-//     console.error("Error fetching Pokemon data:", error);
-//     return {
-//       statusCode: 500,
-//       body: JSON.stringify({ error: "Internal Server Error" }),
-//     };
-//   }
-// };
+export const getPokesCtrl: APIGatewayProxyHandler = async () => {
+  try {
+    const result = await PokeService.getPokemons();
+    if (!result) {
+      throw new Error("No result available for the requested Pokemon");
+    }
+    return {
+      statusCode: 200,
+      body: JSON.stringify({
+        status: true,
+        message: MSG_ERROR_11002,
+        data: result,
+      }),
+    };
+  } catch (error) {
+    console.error("Error fetching Pokemon data:", error);
+    return {
+      statusCode: 500,
+      body: JSON.stringify({ error: "Internal Server Error" }),
+    };
+  }
+};
 export const getPokeCtrl: APIGatewayProxyHandler = async (event) => {
   console.log("event", event);
   if (!event.pathParameters) {
